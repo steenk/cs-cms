@@ -1,0 +1,19 @@
+{
+  "name": "cs-cms",
+  "version": "0.2.0",
+  "description": "Help tool for building censhare CMS.",
+  "main": "tasks/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "censhare"
+  ],
+  "author": "steenk",
+  "license": "MIT",
+  "dependencies": {
+    "jsdom": "^14.0.0",
+    "jsdom-sandbox": "^2.0.0",
+    "tripledollar": "^1.5.2"
+  }
+}
