@@ -21,6 +21,7 @@ module.exports = function (grunt) {
 				const {component} = require('../lib/component');
 				const {widgetitem} = require('../lib/widget');
 				const {fmmacro} = require('../lib/fmmacro');
+				const {localization} = require('../lib/localization');
 
 				setup(data);
 
@@ -132,6 +133,29 @@ module.exports = function (grunt) {
 						// widget storage item
 						let wsi = widgetitem(widget);
 						saveFile('censhare/widgets/' + name + '_widget.xml', wsi.outerHTML);
+
+						// dialog location
+						let locfile = path.resolve(__dirname, '../../../censhare/dialogs/' + (data.prefix||'common') + '_localization.xml');
+						if (!fs.existsSync(locfile)) {
+							let loc_uuid = uuid();
+							let loc = asset({
+								name: 'Online Channel Management Localization',
+								type: 'module.localization.',
+								application: 'texteditor'
+							})
+							.ins(asset_element())
+							.ins(asset_feature({
+								feature: 'censhare:uuid',
+								value_string: loc_uuid
+							}))
+							.ins(storage_item({
+								mimetype: 'application/xml',
+								relpath: 'file:' + loc_uuid.substring(0, 8) + '_' + (data.prefix||'common') + 'localization.xml'
+							}));
+							let loccontent = localization(widget);
+							saveFile('censhare/dialogs/' + (data.prefix||'common') + '_localization.xml', loccontent.outerHTML);
+							saveFile('censhare/assets/' + (data.prefix||'common') + '_dialog_localization_asset.xml', loc.outerHTML);
+						}
 
 						// dialog
 						let d_uuid = uuid();
