@@ -75,7 +75,7 @@ module.exports = function (grunt) {
 								value_key: data.channel
 							}))
 							.ins(storage_item({
-								mimetype: 'application/xml',
+								mimetype: 'text/xml',
 								relpath: 'file:' + c_uuid.substring(0, 8) +'_' + widget.component_file
 							}))
 						;
@@ -124,7 +124,7 @@ module.exports = function (grunt) {
 								value_key: data.channel
 							}))
 							.ins(storage_item({
-								mimetype: 'application/xml',
+								mimetype: 'text/xml',
 								relpath: 'file:' + w_uuid.substring(0, 8) +'_' + widget.widget_file
 							}))
 						;
@@ -153,7 +153,7 @@ module.exports = function (grunt) {
 									value_string: loc_uuid
 								}))
 								.ins(storage_item({
-									mimetype: 'application/xml',
+									mimetype: 'text/xml',
 									relpath: 'file:' + loc_uuid.substring(0, 8) + '_' + (data.prefix||'common') + '_localization.xml'
 								}));
 								saveFile('censhare/assets/' + (data.prefix||'common') + '_localization_asset.xml', loc.outerHTML);
@@ -207,7 +207,7 @@ module.exports = function (grunt) {
 								child_asset_ref_file: locfilerel
 							}))		
 							.ins(storage_item({
-								mimetype: 'application/xml',
+								mimetype: 'text/xml',
 								relpath: 'file:' + d_uuid.substring(0, 8) +'_' + widget.dialog_file
 							}))
 						;
