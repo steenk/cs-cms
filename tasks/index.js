@@ -28,7 +28,7 @@ module.exports = function (grunt) {
 				function setup (data) {
 
 					data.widgets.forEach(function (widget) {
-						let name = widget.name.toLowerCase().replace(' ', '_');
+						let name = widget.name.toLowerCase().replace(/ /g, '_');
 						let s_uuid = uuid();
 
 						// skin
@@ -112,8 +112,8 @@ module.exports = function (grunt) {
 							}))
 							.ins(asset_feature({
 								feature: 'censhare:online-channel.management.dialog-key',
-								value_asset_key_ref: 'censhare:oc.dialog.widget-' + name.replace('_', '.'),
-								value_string2: 'censhare:resource-key'
+								value_asset_key_ref: 'censhare:oc.dialog.widget-' + name.replace(/_/g, '.'),
+								value_string: 'censhare:resource-key'
 							}))
 							.ins(asset_feature({
 								feature: 'censhare:uuid',
@@ -174,7 +174,7 @@ module.exports = function (grunt) {
 						widget.dialog_file = widget.dialog_file || name + '_dialog.xml';
 
 						let d = asset({
-								name: widget.name,
+								name: 'OC Management: ' + widget.name,
 								type: 'module.dialog.'
 							})
 							.ins(asset_element())
@@ -188,8 +188,8 @@ module.exports = function (grunt) {
 							}))
 							.ins(asset_feature({
 								feature: 'censhare:resource-key',
-								value_asset_key_ref: 'censhare:oc.dialog.widget-' + name.replace('_', '.'),
-								value_string2: 'censhare:oc.dialog.widget-' + name.replace('_', '.')
+								value_asset_key_ref: 'censhare:oc.dialog.widget-' + name.replace(/_/g, '.'),
+								value_string: 'censhare:oc.dialog.widget-' + name.replace(/_/g, '.')
 							}))
 							.ins(asset_feature({
 								feature: 'censhare:resource-meta'
@@ -205,7 +205,7 @@ module.exports = function (grunt) {
 							.ins(child_asset_rel({
 								key: 'user.localization.',
 								child_asset_ref_file: locfilerel
-							}))		
+							}, d_uuid + '.asset.xml'))		
 							.ins(storage_item({
 								mimetype: 'text/xml',
 								relpath: 'file:' + d_uuid.substring(0, 8) +'_' + widget.dialog_file
