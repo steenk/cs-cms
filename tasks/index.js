@@ -22,6 +22,7 @@ module.exports = function (grunt) {
 				const {widgetitem} = require('../lib/widget');
 				const {fmmacro} = require('../lib/fmmacro');
 				const {localization} = require('../lib/localization');
+				const {mimetypes} = require('../lib/mimetypes');
 
 				setup(data);
 
@@ -34,7 +35,7 @@ module.exports = function (grunt) {
 						// skin
 						widget.skin_file = widget.skin_file || name + '.ftl';
 						let s = asset({
-								name: widget.name,
+								name: name,
 								type: 'module.oc.skin.'
 							})
 							.ins(asset_element())
@@ -217,12 +218,47 @@ module.exports = function (grunt) {
 						let ds = dialog(widget);
 						saveFile('censhare/dialogs/' + name + '_dialog.xml', ds.outerHTML);
 
+					});
+					(data.extrafiles||[]).forEach(function (f) {
+						
+						let p2 = path.resolve(__dirname, '../../../', f);
+						let s2_uuid = uuid();
+						let [fullname, name, ext] = splitName(f);
+						let s2 = asset({
+								name: fullname,
+								type: 'unknown.'
+							})
+							.ins(asset_element())
+							.ins(asset_feature({
+								feature: 'censhare:uuid',
+								value_string: s2_uuid
+							}))
+							.ins(asset_feature({
+								feature: 'censhare:output-channel',
+								value_key: data.channel
+							}))
+							.ins(storage_item({
+								mimetype: mimetypes[ext],
+								relpath: 'file:' + s2_uuid.substring(0, 8) +'_' + fullname,
+								original_path: p2
+							}))
+						;
+						saveFile('censhare/assets/' + flatName(f) + '.asset.xml', s2.outerHTML);
 					})
 				}
 
 			})
 		}
 	})
+}
+
+function splitName (name) {
+	let [a, b, c] = /\/?([^\/]+)\.(.+)$/.exec(name);
+	return [b + '.' + c, b, c.toLowerCase()];
+}
+
+function flatName (name) {
+	return name.replace(/\/|\s/g, '_');
 }
 
 function saveFile (filepath, data) {
