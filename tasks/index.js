@@ -30,6 +30,7 @@ module.exports = function (grunt) {
 
 					data.widgets.forEach(function (widget) {
 						let name = widget.name.toLowerCase().replace(/ /g, '_');
+						let folder = widget.folder ? widget.folder + '/' : '';
 						let s_uuid = uuid();
 
 						// skin
@@ -49,14 +50,15 @@ module.exports = function (grunt) {
 							}))
 							.ins(storage_item({
 								mimetype: 'application/x-freemarker',
-								relpath: 'file:' + s_uuid.substring(0, 8) +'_' + widget.skin_file
+								relpath: 'file:' + s_uuid.substring(0, 8) +'_' + widget.skin_file,
+								original_path: path.resolve(__dirname, '../../../templates', folder, name + '.ftl')
 							}))
 						;
 						saveFile('censhare/assets/' + name + '_skin_asset.xml', s.outerHTML);
 
 						// freemarker storage item
 						let fmm = fmmacro(widget);
-						saveFile('templates/' + name + '.ftl', fmm);
+						saveFile('templates/' + folder + name + '.ftl', fmm);
 
 						// component
 						let c_uuid = uuid();
