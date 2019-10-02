@@ -1,6 +1,6 @@
 {
   "name": "cs-cms",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Help tool for building censhare CMS.",
   "main": "tasks/index.js",
   "scripts": {
