@@ -255,8 +255,9 @@ module.exports = function (grunt) {
 }
 
 function splitName (name) {
-	let [a, b, c] = /\/?([^\/]+)\.(.+)$/.exec(name);
-	return [b + '.' + c, b, c.toLowerCase()];
+  let re = new RegExp("\/?([^\/]+)\.(.+)$");
+  let [a, b, c] = re.exec(name);
+  return [b + '.' + c, b, c.toLowerCase()];
 }
 
 function flatName (name) {
